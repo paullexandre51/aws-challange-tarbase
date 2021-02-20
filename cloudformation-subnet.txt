@@ -1,6 +1,0 @@
-Resources:
-   SUBNET:
-    Type: 'AWS::EC2::Subnet'
-    Properties:
-      VpcId: !Ref VPC
-      AvailabilityZone: eu-west-1
