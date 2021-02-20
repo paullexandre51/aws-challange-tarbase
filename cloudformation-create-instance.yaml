@@ -1,5 +1,6 @@
-Resources:
-    Type: 'AWS::EC2::Instance'
-        Properties:
-            InstanceType: t3a.micro
-            ImageId: ami-0fc970315c2d38f01
+MyEC2Instance: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-0fc970315c2d38f01"
+      KeyName: "testkey"
+      InstanceType: t3a.micro
