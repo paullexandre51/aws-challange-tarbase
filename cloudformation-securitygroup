@@ -1,9 +1,0 @@
-Type: AWS::EC2::SecurityGroup
-Properties: 
-  GroupDescription: String
-  GroupName: String
-  SecurityGroupEgress: 
-    - 0.0.0.0/0
-  SecurityGroupIngress: 
-    - 0.0.0.0/0
-  VpcId: String
