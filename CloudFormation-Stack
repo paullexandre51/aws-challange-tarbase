@@ -1,0 +1,7 @@
+Resources:
+  EC2I4PJW7:
+    Type: 'AWS::EC2::Instance'
+    Properties: {}
+    InstanceType: t3a.micro
+    ImageId: ami-0fc970315c2d38f01
+    
