@@ -1,4 +1,4 @@
 Resources:
-    Type: AWS::EC2::EIP
-        Properties:
-            InstanceId: //Define in the future
+Type: AWS::EC2::EIP
+Properties:
+        InstanceId:
