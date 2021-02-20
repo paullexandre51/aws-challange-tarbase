@@ -1,5 +1,5 @@
 MyEC2Instance: 
-    Type: AWS::EC2::Instance
+  Type: AWS::EC2::Instance
     Properties: 
       ImageId: "ami-0fc970315c2d38f01"
       KeyName: "aws-cha"

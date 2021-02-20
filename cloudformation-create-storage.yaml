@@ -1,5 +1,5 @@
 MyStorage:
     Type: 'AWS::EC2::Volume'
-    Properties:
+        Properties:
             Encrypted: True
             Size: 10 
