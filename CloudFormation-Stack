@@ -1,7 +1,8 @@
 Resources:
-  EC2I4PJW7:
+   LinuxVM:
     Type: 'AWS::EC2::Instance'
-    Properties: {}
+    Properties:
     InstanceType: t3a.micro
     ImageId: ami-0fc970315c2d38f01
-    
+    NetworkInterfaces:
+        - SubnetId: !Ref EC2S2KC8O
