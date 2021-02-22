@@ -9,5 +9,17 @@ Resources:
      Properties:
        AvailabilityZone: eu-west-1
        Encrypted: True
-       Size: 10 
+       Size: 10
+  MyEC2Instance: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-0fc970315c2d38f01"
+      KeyName: "aws-cha"
+      InstanceType: t3a.micro
+      UserData: 
+       !Base64 |
+       #!/bin/bash
+       tar -czf tar.tgz /var/log
+       mv tar.tgz /home/ec2-user
+       chown ec2-user:ec2-user /home/ec2-user/tar.tgz
       
