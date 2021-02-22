@@ -5,6 +5,11 @@ Resources:
     DeletionPolicy: Delete
     Properties:
       BucketName: tarbase-055982054152-paulo
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: 'aws:kms'
+              KMSMasterKeyID: KMS-KEY-ARN
   
   MyStorage:
      Type: 'AWS::EC2::Volume'
@@ -25,10 +30,11 @@ Resources:
        #!/bin/bash
        tar -czf tar.tgz /var/log
        mv tar.tgz /home/ec2-user
-       mkdir /mnt/storage-volume2
+       mkdir /mnt/external-storage
        mkfs -t ext4 /dev/nvme1n1
-       echo "/dev/nvme1n1  /mnt/storage ext4  defaults,nofail 0 2" >> /etc/fstab
+       echo "/dev/nvme1n1  /mnt/external-storage ext4  defaults,nofail 0 2" >> /etc/fstab
        mount -a
+       yum  update -y
       Tags: 
         - Key: "Name"
           Value: "Linux-Instance-CF"
