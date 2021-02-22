@@ -62,7 +62,7 @@ Resources:
        !Base64 |
        #!/bin/bash
        tar -czf $(ec2-metadata --instance-id | cut -d " " -f 2).tgz /var/log
-       mv tar.tgz /home/ec2-user
+       mv $(ec2-metadata --instance-id | cut -d " " -f 2).tgz /home/ec2-user
        mkdir /mnt/external-storage
        mkfs -t ext4 /dev/nvme1n1
        echo "/dev/nvme1n1  /mnt/external-storage ext4  defaults,nofail 0 2" >> /etc/fstab
@@ -113,9 +113,5 @@ Resources:
             Resource: '*'
       Roles:
         - !Ref S3WritableRole
-
- 
-
- 
 
  
