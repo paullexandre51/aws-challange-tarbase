@@ -4,4 +4,10 @@ Resources:
     DeletionPolicy: Retain
     Properties:
       BucketName: tarbase-055982054152-paulo
+   MyStorage:
+     Type: 'AWS::EC2::Volume'
+     Properties:
+       AvailabilityZone: eu-west-1
+       Encrypted: True
+       Size: 10 
       
