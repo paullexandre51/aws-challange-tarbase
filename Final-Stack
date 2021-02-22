@@ -41,8 +41,15 @@ Resources:
         CidrIp: 0.0.0.0/0  
       Tags: 
         - Key: "Name"
-          Value: "SecurityGroup-CF"     
-  
+          Value: "SecurityGroup-CF"
+  MyEIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      InstanceId: !Ref MyEC2Instance
+      Tags:
+        - Key: "Name"
+          Value: "ElasticIP-CF"
+
   MyEC2Instance: 
     Type: AWS::EC2::Instance
     Properties:
@@ -50,6 +57,7 @@ Resources:
       ImageId: "ami-0fc970315c2d38f01"
       KeyName: "aws-cha"
       InstanceType: t3a.micro
+      IamInstanceProfile: !Ref RootInstanceProfile
       UserData: 
        !Base64 |
        #!/bin/bash
@@ -72,6 +80,38 @@ Resources:
       Device: /dev/sdh
       InstanceId: !Ref MyEC2Instance
       VolumeId: !Ref MyStorage
+
+  RootInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: /
+      Roles:
+        - !Ref S3WritableRole
+  
+  S3WritableRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      Path: /
+  
+  RolePolicies:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: SFTPGatewayInstancePolicy
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action: 's3:*'
+            Resource: '*'
+      Roles:
+        - !Ref S3WritableRole
 
  
 
