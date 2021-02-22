@@ -20,7 +20,7 @@ Resources:
        AvailabilityZone: eu-west-1a
        Encrypted: True
        Size: 10
-      Tags: 
+       Tags: 
         - Key: "Name"
           Value: "Storage-CF"   
 
@@ -72,5 +72,7 @@ Resources:
       Device: /dev/sdh
       InstanceId: !Ref MyEC2Instance
       VolumeId: !Ref MyStorage
+
+ 
 
  
