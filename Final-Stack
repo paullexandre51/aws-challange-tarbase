@@ -1,18 +1,19 @@
 Resources:
   S3Bucket:
     Type: 'AWS::S3::Bucket'
-    DeletionPolicy: Retain
+    DeletionPolicy: Delete
     Properties:
       BucketName: tarbase-055982054152-paulo
-   MyStorage:
+  MyStorage:
      Type: 'AWS::EC2::Volume'
      Properties:
-       AvailabilityZone: eu-west-1
+       AvailabilityZone: eu-west-1a
        Encrypted: True
        Size: 10
   MyEC2Instance: 
     Type: AWS::EC2::Instance
-    Properties: 
+    Properties:
+      AvailabilityZone: eu-west-1a
       ImageId: "ami-0fc970315c2d38f01"
       KeyName: "aws-cha"
       InstanceType: t3a.micro
@@ -21,5 +22,13 @@ Resources:
        #!/bin/bash
        tar -czf tar.tgz /var/log
        mv tar.tgz /home/ec2-user
-       chown ec2-user:ec2-user /home/ec2-user/tar.tgz
-      
+      Tags: 
+        - Key: "Name"
+          Value: "Linux-Instance-CF"
+      SecurityGroupIds: ["sg-0b21375c2a7c35f81"]
+  AttachStorage:
+    Type: AWS::EC2::VolumeAttachment
+    Properties: 
+      Device: /dev/sdz
+      InstanceId: !Ref MyEC2Instance
+      VolumeId: !Ref MyStorage
