@@ -61,13 +61,14 @@ Resources:
       UserData: 
        !Base64 |
        #!/bin/bash
-       tar -czf tar.tgz /var/log
+       tar -czf $(ec2-metadata --instance-id | cut -d " " -f 2).tgz /var/log
        mv tar.tgz /home/ec2-user
        mkdir /mnt/external-storage
        mkfs -t ext4 /dev/nvme1n1
        echo "/dev/nvme1n1  /mnt/external-storage ext4  defaults,nofail 0 2" >> /etc/fstab
        mount -a
        yum  update -y
+       aws s3 cp $(ec2-metadata --instance-id | cut -d " " -f 2).tgz s3://tarbase-055982054152-paulo/ --sse aws:kms
       Tags: 
         - Key: "Name"
           Value: "Linux-Instance-CF"
@@ -112,6 +113,8 @@ Resources:
             Resource: '*'
       Roles:
         - !Ref S3WritableRole
+
+ 
 
  
 
