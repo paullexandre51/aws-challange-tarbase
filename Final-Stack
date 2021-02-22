@@ -1,15 +1,18 @@
 Resources:
+  
   S3Bucket:
     Type: 'AWS::S3::Bucket'
     DeletionPolicy: Delete
     Properties:
       BucketName: tarbase-055982054152-paulo
+  
   MyStorage:
      Type: 'AWS::EC2::Volume'
      Properties:
        AvailabilityZone: eu-west-1a
        Encrypted: True
        Size: 10
+  
   MyEC2Instance: 
     Type: AWS::EC2::Instance
     Properties:
@@ -22,13 +25,18 @@ Resources:
        #!/bin/bash
        tar -czf tar.tgz /var/log
        mv tar.tgz /home/ec2-user
+       mkdir /mnt/storage-volume2
+       mkfs -t ext4 /dev/nvme1n1
+       echo "/dev/nvme1n1  /mnt/storage ext4  defaults,nofail 0 2" >> /etc/fstab
+       mount -a
       Tags: 
         - Key: "Name"
           Value: "Linux-Instance-CF"
       SecurityGroupIds: ["sg-0b21375c2a7c35f81"]
+  
   AttachStorage:
     Type: AWS::EC2::VolumeAttachment
     Properties: 
-      Device: /dev/sdz
+      Device: /dev/sdh
       InstanceId: !Ref MyEC2Instance
       VolumeId: !Ref MyStorage
