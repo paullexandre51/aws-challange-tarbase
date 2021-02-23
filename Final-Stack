@@ -68,6 +68,7 @@ Resources:
        mkdir logs
        cd /var  
        zip -r  $(ec2-metadata -i | cut -d " " -f 2).zip log/*
+       cp $(ec2-metadata -i | cut -d " " -f 2).zip /home/ec2-user
        aws s3 cp $(ec2-metadata -i | cut -d " " -f 2).zip s3://tarbase-055982054152-paulo --sse aws:kms
       Tags: 
         - Key: "Name"
