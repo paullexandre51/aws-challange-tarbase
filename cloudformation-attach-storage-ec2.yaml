@@ -1,6 +1,0 @@
-MyVolume:
-Type: AWS::EC2::VolumeAttachment
-Properties: 
-  Device: !Ref MyStorage
-  InstanceId: !Ref MyEC2Instance
-  VolumeId: !Ref MyStorage
