@@ -60,15 +60,15 @@ Resources:
       IamInstanceProfile: !Ref RootInstanceProfile
       UserData: 
        !Base64 |
-       #!/bin/bash
-       tar -czf $(ec2-metadata --instance-id | cut -d " " -f 2).tgz /var/log
-       mv $(ec2-metadata --instance-id | cut -d " " -f 2).tgz /home/ec2-user
+       #!/bin/bash 
        mkdir /mnt/external-storage
        mkfs -t ext4 /dev/nvme1n1
        echo "/dev/nvme1n1  /mnt/external-storage ext4  defaults,nofail 0 2" >> /etc/fstab
        mount -a
-       yum  update -y
-       aws s3 cp $(ec2-metadata --instance-id | cut -d " " -f 2).tgz s3://tarbase-055982054152-paulo/ --sse aws:kms
+       mkdir logs
+       cd /var  
+       zip -r  $(ec2-metadata -i | cut -d " " -f 2).zip log/*
+       aws s3 cp $(ec2-metadata -i | cut -d " " -f 2).zip s3://tarbase-055982054152-paulo --sse aws:kms
       Tags: 
         - Key: "Name"
           Value: "Linux-Instance-CF"
